@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Game Offline Tap Score</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #000, #222);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.game-box {
+    background: #111;
+    border-radius: 15px;
+    padding: 25px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(255,255,255,0.2);
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.score, .time {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background: white;
+    color: black;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.result {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #00ffcc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="game-box">
+    <h1>🎮 TAP SCORE</h1>
+    <div class="score">Skor: <span id="score">0</span></div>
+    <div class="time">Waktu: <span id="time">10</span> detik</div>
+
+    <button onclick="tap()">TAP SEKARANG!</button>
+    <button onclick="startGame()">MULAI ULANG</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+let score = 0;
+let timeLeft = 10;
+let gameActive = false;
+let timer;
+
+function startGame() {
+    score = 0;
+    timeLeft = 10;
+    gameActive = true;
+    document.getElementById("score").innerText = score;
+    document.getElementById("time").innerText = timeLeft;
+    document.getElementById("result").innerText = "";
+
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (timeLeft > 0) {
+            timeLeft--;
+            document.getElementById("time").innerText = timeLeft;
+        } else {
+            endGame();
+        }
+    }, 1000);
+}
+
+function tap() {
+    if (gameActive) {
+        score++;
+        document.getElementById("score").innerText = score;
+    }
+}
+
+function endGame() {
+    clearInterval(timer);
+    gameActive = false;
+    document.getElementById("result").innerText =
+        "⏱ Game Selesai! Skor Akhir: " + score;
+}
+</script>
+
+</body>
+</html>
